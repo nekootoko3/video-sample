@@ -1,8 +1,9 @@
 import { useCallback, useState } from "react";
 
 import { Call as AgoraCall } from "./agora/Call";
+import { Call as SkywayP2PCall } from "./skywayP2P/Call";
 
-type Provider = "None" | "Agora" | "Skyway";
+type Provider = "None" | "Agora" | "SkywayP2P";
 
 const useVideoProvider = () => {
   const [provider, setProvider] = useState<Provider>("None");
@@ -11,7 +12,7 @@ const useVideoProvider = () => {
     setProvider("Agora");
   }, []);
   const selectSkyway = useCallback(() => {
-    setProvider("Skyway");
+    setProvider("SkywayP2P");
   }, []);
 
   const CallComponent = getCallComponent(provider);
@@ -28,8 +29,8 @@ const getCallComponent = (provider: Provider) => {
   switch (provider) {
     case "Agora":
       return AgoraCall;
-    case "Skyway":
-      return null;
+    case "SkywayP2P":
+      return SkywayP2PCall;
     case "None":
       return null;
     default:
@@ -53,7 +54,7 @@ export const Call: React.VFC = () => {
         <input
           type="checkbox"
           onChange={selectSkyway}
-          checked={provider === "Skyway"}
+          checked={provider === "SkywayP2P"}
         />
       </div>
       <div>{CallComponent && <CallComponent />}</div>
