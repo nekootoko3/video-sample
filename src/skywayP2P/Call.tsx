@@ -25,6 +25,7 @@ export const Call: React.VFC = () => {
 
   const onClickCall = () => {
     if (!peer || !peer.open) return;
+    if (!localStream) return;
 
     const mediaConnection = peer.call(peerId, localStream);
 
